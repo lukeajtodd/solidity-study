@@ -1,11 +1,30 @@
 import * as dotenv from "dotenv";
 
-import { HardhatUserConfig, task } from "hardhat/config";
+import { HardhatUserConfig, task, subtask } from "hardhat/config";
 import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
+import { TASK_COMPILE_SOLIDITY_GET_SOLC_BUILD } from "hardhat/builtin-tasks/task-names";
+
+subtask(TASK_COMPILE_SOLIDITY_GET_SOLC_BUILD, async (args: any, hre, runSuper) => {
+  if (args.solcVersion === "0.8.4") {
+    const compilerPath = "/home/luketodd/.svm/solc/0.8.4/solc";
+
+    return {
+      compilerPath,
+      isSolcJs: false, // if you are using a native compiler, set this to false
+      version: args.solcVersion,
+      // this is used as extra information in the build-info files, but other than
+      // that is not important
+      longVersion: "0.8.4+commit.c7e474f2.Linux.g++"
+    }
+  }
+
+  // we just use the default subtask if the version is not 0.8.5
+  return runSuper();
+})
 
 dotenv.config();
 

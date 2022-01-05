@@ -2,13 +2,17 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 contract HelloWorld {
-  string public message;
+  string message;
 
   constructor() {
-    this.message = "Hello!";
+    message = "Hello!";
+  }
+
+  function getMessage() public view returns (string memory) {
+    return message;
   }
 
   function imSpanish() public {
-    this.message = "Hola!"
+    message = "Hola!"; 
   }
 }
