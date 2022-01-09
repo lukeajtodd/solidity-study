@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Greeter } from "./Greeter";
+export type { Token } from "./Token";
 
 export { Greeter__factory } from "./factories/Greeter__factory";
+export { Token__factory } from "./factories/Token__factory";
