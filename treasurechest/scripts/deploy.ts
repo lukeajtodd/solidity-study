@@ -3,6 +3,7 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
+import { Contract } from 'ethers'
 import { ethers } from 'hardhat'
 
 async function main() {
@@ -13,10 +14,11 @@ async function main() {
   const contracts = [
     {
       name: 'Greeter',
-      value: 'Hello, Hardhat!',
+      value: ['Hello, Hardhat!'],
     },
     {
-      name: 'Token',
+      name: 'MSTToken',
+      value: ['My Shiny Token', 'MST'],
     },
   ]
 
@@ -24,7 +26,7 @@ async function main() {
     const Contract = await ethers.getContractFactory(contract.name)
     let res
     if (contract.value) {
-      res = await Contract.deploy(contract.value)
+      res = await Contract.deploy(...contract.value)
     } else {
       res = await Contract.deploy()
     }

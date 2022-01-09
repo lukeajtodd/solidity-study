@@ -2,7 +2,7 @@ import './App.css'
 import { useState } from 'react'
 import { ethers } from 'ethers'
 import Greeter from './artifacts/contracts/Greeter.sol/Greeter.json'
-import Token from './artifacts/contracts/Token.sol/Token.json'
+import MSTToken from './artifacts/contracts/Token.sol/MSTToken.json'
 
 const greeterAddress = '0xe7f1725e7734ce288f8367e1bb143e90bb3f0512'
 const tokenAddress = '0x5fbdb2315678afecb367f032d93f642f64180aa3'
@@ -44,9 +44,9 @@ const App = () => {
       const provider = new ethers.providers.Web3Provider(
         (window as any).ethereum,
       )
-      const contract = new ethers.Contract(tokenAddress, Token.abi, provider)
+      const contract = new ethers.Contract(tokenAddress, MSTToken.abi, provider)
       const balance = await contract.balanceOf(account)
-      console.log('Balance: ', balance.toString())
+      console.log('Balance: ', ethers.utils.formatUnits(balance.toString()))
     }
   }
 
@@ -71,8 +71,8 @@ const App = () => {
       await requestAccount();
       const provider = new ethers.providers.Web3Provider((window as any).ethereum);
       const signer = provider.getSigner();
-      const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
-      const transaction = await contract.transfer(userAccount, amount);
+      const contract = new ethers.Contract(tokenAddress, MSTToken.abi, signer);
+      const transaction = await contract.transfer(userAccount, ethers.utils.parseUnits(amount));
       await transaction.wait();
       console.log(`${amount} Coins successfully sent to ${userAccount}`);
     }
